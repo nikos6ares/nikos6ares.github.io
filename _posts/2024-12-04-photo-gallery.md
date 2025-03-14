@@ -16,5 +16,5 @@ images:
 
 ## Welcoming
 
-<a href="assets/img/dali.jpg" data-lightbox="dali"><img src="assets/img/dali.jpg" /></a>
+<a href="assets/img/dali.jpeg" data-lightbox="dali"><img src="assets/img/dali.jpeg" /></a>
 ---
