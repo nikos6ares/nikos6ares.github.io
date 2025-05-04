@@ -207,9 +207,9 @@ To remove the news section, you can:
 
 To remove the projects, you can:
 
-- delete the  directory
+- delete the directory
 - delete the projects page
-- remove reference to projects page in our 
+- remove reference to projects page in our
 - remove projects part in the `Collections` section in the [\_config.yml](_config.yml) file
 
 ### Removing the publications page

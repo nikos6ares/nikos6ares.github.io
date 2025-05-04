@@ -24,6 +24,7 @@ latest_posts:
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
   limit: 3 # leave blank to include all the blog posts
 ---
+
 Hello! I am Nikos :wave: a physicist trasitioning to Machine Learning. Currently, I am an [ELLIS](https://ellis.eu/)- PhD student at the [Empirical Inference](https://is.mpg.de/ei/) group in Max Planck Institute for Intelligent Systems in Tübingen where I have the good fortune to be supervised by Prof. Bernhard Schölkopf and Prof. Markus Reichstein.
 
 I work on Causal ML on Earth Systems. More specifically, I am focusing on Causal Digital Twins with applications in Earth Systems to bridge data-driven methods with models using causal inference techniques.

@@ -10,11 +10,11 @@ images:
   spotlight: true
   venobox: true
 ---
+
 <figure align="center">
   <img src="/assets/img/figures_genriflow/genres_bubbles.png" alt="Alt text" width="600" />
   <figcaption>A diagram of different genres. Image from <a href="https://musicmachinery.com/2013/09/22/5025/">Music Popcorn.</a></figcaption>
 </figure>
-
 
 In this blog I will develop a ML-based program I call Genriflow to classify songs into genres.
 
@@ -39,8 +39,6 @@ On a personal note, as a passionate music enthusiast, I’ve curated a private m
   <figcaption>SensMe in the Sony Walkman MP3 player [figs. from wikipedia]</figcaption>
 </figure>
 
-
-
 ## Datasets
 
 In this project, I use the standard GTZAN dataset, which classifies songs into 10 genres: blues, classical, country, disco, hiphop, jazz, metal, pop, reggae, and rock. More information and the dataset itself can be found on [Kaggle](https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification).
@@ -49,14 +47,13 @@ While these may not be the exact genres I ultimately want to cluster, GTZAN rema
 
 In future iterations, I plan to apply the model to more flexible and diverse datasets, such as the [FMA dataset](https://github.com/mdeff/fma) or data obtained through the [Spotify Web API](https://developer.spotify.com/documentation/web-api).
 
-
 ## Audio Data Classification Models
 
 An MP3 file contains an audio signal. A musical genre is a category that groups music based on style, form, or cultural origin. But how are these two concepts connected? The answer lies somewhere between music theory and signal processing. Here I will use 4 features: the _Chroma feature_, the _Tonnetz_, the _Mel Spectrogram_ and the _Mel-frequency cepstrum_.
 
 The idea is to choose features to capture: the timbre, the pitch, and the intensity.
 
-The pitch is how high or low a note sounds. The intensity is how strong or loud it sounds. The timbre is what makes instruments sound different even if they play the same note (pitch). 
+The pitch is how high or low a note sounds. The intensity is how strong or loud it sounds. The timbre is what makes instruments sound different even if they play the same note (pitch).
 
 ### mp3
 
@@ -82,7 +79,7 @@ In simple terms, chroma captures the scale, the key, the notes.
 <img src="/assets/img/figures_genriflow/tonnetz_features.png" alt="Alt text" width="600" />
 </p>
 
-This concept was invented by the famous mathematician Euler and it shows the harmonic intervals such as the major and minor fifths, thirds, octaves, of the pitches based on the chromagram. 
+This concept was invented by the famous mathematician Euler and it shows the harmonic intervals such as the major and minor fifths, thirds, octaves, of the pitches based on the chromagram.
 
 In simple terms, tonnetz captures the chord progressions and the harmonics.
 
@@ -91,8 +88,7 @@ In simple terms, tonnetz captures the chord progressions and the harmonics.
 <p align="center">
 <img src="/assets/img/figures_genriflow/mel_spectrogram.png" alt="Alt text" width="600" />
 </p>
-The mel-frequency cepstrum or mel spectrogram is a special type of spectrogram. The idea is to map the spectrogram (the frequencies) onto the mel scale (the mels). Human ears do not perceive pitches linearly. Distance between frequencies sound uneven. Mel scale is a proper stretch so that two tones with same mel distance sound equally spaced to our ears. 
-
+The mel-frequency cepstrum or mel spectrogram is a special type of spectrogram. The idea is to map the spectrogram (the frequencies) onto the mel scale (the mels). Human ears do not perceive pitches linearly. Distance between frequencies sound uneven. Mel scale is a proper stretch so that two tones with same mel distance sound equally spaced to our ears.
 
 In simple terms, the mel spectrogram captures the texture, the intensity patterns and the rhythm of the songs.
 
@@ -108,11 +104,11 @@ In simple terms, the MFCCs characterize the timbre, i.e., the different instrume
 
 ## Preprocessing
 
-I used the _librosa_ library to extract the features mentioned earlier. First, I applied the librosa.load function to input the song and retrieve its audio data along with the sample rate. Next, I performed padding and trimming on the audio files to ensure they all have the same length (approximately 30 seconds). After that, I used librosa to extract the four features. The final step involved standardization, which took some time to fine-tune. The feature array for each main feature has the shape (samples, number of features, time length). Through experimentation, I found that the best normalization method was to normalize across all samples and time steps. Specifically, I reshaped the array to (samples * time, features) and then applied normalization on a per-feature basis. In other words, for each feature column (e.g., MFCC1, MFCC2, etc.), I subtracted the mean and divided by the standard deviation.
+I used the _librosa_ library to extract the features mentioned earlier. First, I applied the librosa.load function to input the song and retrieve its audio data along with the sample rate. Next, I performed padding and trimming on the audio files to ensure they all have the same length (approximately 30 seconds). After that, I used librosa to extract the four features. The final step involved standardization, which took some time to fine-tune. The feature array for each main feature has the shape (samples, number of features, time length). Through experimentation, I found that the best normalization method was to normalize across all samples and time steps. Specifically, I reshaped the array to (samples \* time, features) and then applied normalization on a per-feature basis. In other words, for each feature column (e.g., MFCC1, MFCC2, etc.), I subtracted the mean and divided by the standard deviation.
 
 ## Modelling Attempts
 
-My initial approach was to apply unsupervised learning without using any labels, aiming to discover clustering patterns that might correspond to musical genres. I began with __PCA__ and __Gaussian Mixture Models__ (similar to k-means), and later explored __autoencoders__. However, this approach proved to be a disaster, prompting me to switch to supervised learning. I ambitiously attempted to use __RNNs (LSTMs)__, before eventually returning to __CNNs__, where I achieved a respectable accuracy score. I then experimented with __data augmentation__ to improve the model, but the performance increase was minimal compared to the significant additional computational resources required.
+My initial approach was to apply unsupervised learning without using any labels, aiming to discover clustering patterns that might correspond to musical genres. I began with **PCA** and **Gaussian Mixture Models** (similar to k-means), and later explored **autoencoders**. However, this approach proved to be a disaster, prompting me to switch to supervised learning. I ambitiously attempted to use **RNNs (LSTMs)**, before eventually returning to **CNNs**, where I achieved a respectable accuracy score. I then experimented with **data augmentation** to improve the model, but the performance increase was minimal compared to the significant additional computational resources required.
 
 ### Unsupervised PCA + GMMs (4 Clusters)
 
@@ -120,7 +116,7 @@ My initial approach was to apply unsupervised learning without using any labels,
 <img src="/assets/img/figures_genriflow/PCA_plot.png" alt="Alt text" width="600" />
 </p>
 
-I used the processed data and flattened the time dimension, resulting in arrays of shape (samples, features * time_steps). Then, I applied PCA to reduce the dimensionality and used a Gaussian Mixture Model (GMM) for clustering with 10 genres.
+I used the processed data and flattened the time dimension, resulting in arrays of shape (samples, features \* time_steps). Then, I applied PCA to reduce the dimensionality and used a Gaussian Mixture Model (GMM) for clustering with 10 genres.
 
 To evaluate the accuracy, I used the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI). The challenge arises because, while we have true labels, the predicted labels are simply cluster indices. We don't know which index corresponds to which cluster.
 
@@ -175,6 +171,7 @@ Plots of the training and validation error and loss for augmented and non-augmen
 ## Model Conclusions
 
 In this notebook, I attempted to classify songs into genres using the following four features:
+
 1. Chroma
 2. Tonnetz
 3. Mel spectrogram
@@ -183,12 +180,15 @@ In this notebook, I attempted to classify songs into genres using the following 
 After preprocessing the data, I trained the following five models:
 
 1. Unsupervised:
-  - PCA + GMMs
-  - LSTM Autoencoders
+
+- PCA + GMMs
+- LSTM Autoencoders
+
 2. Supervised:
-  - LSTM + CNN
-  - CNNs with regularization
-  - CNNs with regularization and augmented data
+
+- LSTM + CNN
+- CNNs with regularization
+- CNNs with regularization and augmented data
 
 The highest accuracy was obtaiend with CNNs with regularization achieving a 74% accuracy.
 
@@ -200,6 +200,7 @@ Theoretically, I felt a bit unsatisfied, as this approach seems too “engineeri
 Most importantly, this project helped me realize how crucial feature engineering is. I used physics and cultural knowledge (Western music theory) to extract features, which brought in domain expertise as well as cultural biases—apart from just data collection. Preprocessing, then, is not just a “bureaucratic” step in machine learning; it is as important as training the model itself.
 
 ## Extensions
+
 1. The goal of this project was to develop a genre classifier for my own music library. I used the GTZAN dataset, which classifies songs into 10 genres: blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae, and rock. Admittedly, this is not the classification I want. In my own music library, I do not have many songs in disco, metal, blues, or reggae. Instead, I have many songs that blend different genres. Nowadays, music tends to be more genre-blending. The GTZAN dataset, in this sense, is a bit limited. Using data from Spotify would be much more useful for me. My goal is to use the [Spotify Web API](https://developer.spotify.com/documentation/web-api) for genre labels beyond these 10.
 
 2. Another extension I want to apply is to introduce two additional genre categories. One would be language-based (e.g., to identify Greek songs), and the other would be an "instrumental" category, for songs with no lyrics. For this, I would need a language-based model.
