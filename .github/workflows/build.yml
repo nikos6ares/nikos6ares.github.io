@@ -2,7 +2,7 @@ name: Jekyll Build
 
 on:
   push:
-    branches: [main]  # Or your default branch
+    branches: [main] # Or your default branch
 
 jobs:
   build-deploy:
@@ -14,17 +14,18 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'  # Compatible with jekyll-scholar
+          ruby-version: "3.2" # Compatible with jekyll-scholar
           bundler-cache: true
+
+      # Set up Python and install Jupyter before running the build
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Jupyter
+        run: pip install jupyter
 
       - name: Install dependencies
         run: bundle install
 
-      - name: Build Jekyll site
-        run: bundle exec jekyll build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
