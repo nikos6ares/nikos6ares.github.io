@@ -1,1 +1,4 @@
-Sitemap: /sitemap.xml
+User-agent: *
+Disallow:
+
+Sitemap: https://nikos6ares.github.io/sitemap.xml
