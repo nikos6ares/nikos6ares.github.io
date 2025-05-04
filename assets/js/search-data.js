@@ -7,21 +7,21 @@ ninja.data = [{
     title: "about",
     section: "Navigation",
     handler: () => {
-      window.location.href = "/";
+      window.location.href = "/nikos6ares.github.io/";
     },
   },{id: "nav-publications",
           title: "publications",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/publications/";
+            window.location.href = "/nikos6ares.github.io/publications/";
           },
         },{id: "nav-blog",
           title: "blog",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/blog/";
+            window.location.href = "/nikos6ares.github.io/blog/";
           },
         },{id: "post-music-classification",
       
@@ -31,14 +31,14 @@ ninja.data = [{
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2025/genriflow/";
+          window.location.href = "/nikos6ares.github.io/blog/2025/genriflow/";
         
       },
     },{id: "books-the-godfather",
           title: 'The Godfather',
           description: "",
           section: "Books",handler: () => {
-              window.location.href = "/books/the_godfather/";
+              window.location.href = "/nikos6ares.github.io/books/the_godfather/";
             },},{id: "news-new-website-using-jekyll-smile",
           title: 'New website using jekyll! :smile:',
           description: "",
