@@ -1,31 +1,15 @@
-# Lighthouse-Badger-Easy | GitHub Action Workflow
-# 
-# Description: Generates, adds & updates manually/automatically Lighthouse badges & reports from one/multiple input URL(s) to the current repository & main branch with minimal settings
-# Author: Sitdisch
-# Source: https://github.com/myactionway/lighthouse-badger-workflows
-# License: MIT
-# Copyright (c) 2021 Sitdisch
-
 name: 'Lighthouse-Badger-Easy'
 
 ########################################################################
-# DEFINE YOUR INPUTS AND TRIGGERS IN THE FOLLOWING
+# DEFINE INPUTS AND TRIGGERS
 ########################################################################
 
-# INPUTS as environmental variables (env) for not manually triggered workflows 
 env:
-  URLS: https://nikos6ares.github.io/ # URL(s) to be checked e.g. 'https://github.com/sitdisch https://github.com/mythemeway'
-  TOKEN_NAME: LIGHTHOUSE_BADGER_TOKEN # target token name; insert only the name never the real value e.g. 'LIGHTHOUSE_BADGER_TOKEN'
-  # THAT'S IT; JUMP TO THE TRIGGERS;
-  REPO_BRANCH: '${{ github.repository }} main' # target repo & branch
+  URLS: https://nikos6ares.github.io/  # URL(s) to test
+  TOKEN_NAME: LIGHTHOUSE_BADGER_TOKEN  # Token name (NO VALUE!)
+  REPO_BRANCH: '${{ github.repository }} main'  # Target repo & branch
 
-# TRIGGERS
 on:
-  # page_build:
-  # schedule: # Check your schedule here => https://crontab.guru/
-  #   - cron: '55 23 * * 0' # e.g. every Sunday at 23:55
-  # 
-  # THAT'S IT; YOU'RE DONE;
   workflow_dispatch:
     inputs:
       urls:
@@ -36,29 +20,42 @@ on:
         required: true
 
 ########################################################################
-# THAT'S IT; YOU DON'T HAVE TO DEFINE ANYTHING IN THE FOLLOWING
+# PERMISSIONS & JOBS
 ########################################################################
+
+permissions:
+  contents: write  # Required to push badges to the repo
 
 jobs:
   lighthouse-badger-easy:
     runs-on: ubuntu-22.04
     timeout-minutes: 8
     steps:
+      # Step 1: Set up repo/branch vars
       - name: Preparatory Tasks
         run: |
           REPOSITORY=`expr "${{ env.REPO_BRANCH }}" : "\([^ ]*\)"`
           BRANCH=`expr "${{ env.REPO_BRANCH }}" : ".* \([^ ]*\)"`
           echo "REPOSITORY=$REPOSITORY" >> $GITHUB_ENV
           echo "BRANCH=$BRANCH" >> $GITHUB_ENV
-      - uses: actions/checkout@v3
+
+      # Step 2: Checkout YOUR repo (with correct token)
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           repository: ${{ env.REPOSITORY }}
-          token: ${{ secrets.LIGHTHOUSE_BADGER_TOKEN }} #${{ secrets[github.event.inputs.token_name] || secrets[env.TOKEN_NAME] }}
+          token: ${{ secrets.LIGHTHOUSE_BADGER_TOKEN }}
           ref: ${{ env.BRANCH }}
-      - uses: actions/checkout@v3
+
+      # Step 3: Checkout Lighthouse Badges tool
+      - name: Checkout Lighthouse Badges
+        uses: actions/checkout@v4
         with:
           repository: 'myactionway/lighthouse-badges'
           path: temp_lighthouse_badges_nested
-      - uses: myactionway/lighthouse-badger-action@v2.2
+
+      # Step 4: Run Lighthouse Badger
+      - name: Run Lighthouse Badger
+        uses: myactionway/lighthouse-badger-action@v2.2
         with:
           urls: ${{ github.event.inputs.urls || env.URLS }}
