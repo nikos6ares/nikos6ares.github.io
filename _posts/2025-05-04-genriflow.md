@@ -16,7 +16,7 @@ images:
   <figcaption>A diagram of different genres. Image from Music Popcorn.</figcaption>
 </figure>
 
-In this blog I will develop a ML-based program I call Genriflow to classify songs into genres.
+In this blog, I develop a ML-based program I call Genriflow to classify songs into genres.
 
 **The github for this project can be found in [genriflow](https://github.com/nikos6ares/genriflow).**
 
