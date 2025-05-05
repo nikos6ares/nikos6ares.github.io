@@ -1,0 +1,30 @@
+name: Build and Deploy with Jekyll-Scholar
+on:
+  push:
+    branches: [ main ]  # Trigger on pushes to main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code
+      - uses: actions/checkout@v4
+
+      # Set up Ruby
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'  # Match your local Ruby version
+          bundler-cache: true  # Cache gems for faster builds
+
+      # Install dependencies (including jekyll-scholar)
+      - run: bundle install
+
+      # Build the site
+      - run: bundle exec jekyll build --baseurl "${{ github.event.repository.name }}"
+
+      # Deploy to GitHub Pages
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true  # Preserve existing files in gh-pages

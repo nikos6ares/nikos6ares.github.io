@@ -13,7 +13,7 @@ images:
 
 <figure align="center">
   <img src="/assets/img/figures_genriflow/genres_bubbles.png" alt="Alt text" width="600" />
-  <figcaption>A diagram of different genres. Image from <a href="https://musicmachinery.com/2013/09/22/5025/">Music Popcorn.</a></figcaption>
+  <figcaption>A diagram of different genres. Image from Music Popcorn.</figcaption>
 </figure>
 
 In this blog I will develop a ML-based program I call Genriflow to classify songs into genres.

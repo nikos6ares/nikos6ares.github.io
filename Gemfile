@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'jekyll'
+gem 'jekyll', '~> 4.3'
 
 # Core plugins that directly affect site building
 group :jekyll_plugins do
@@ -35,4 +35,8 @@ group :other_plugins do
     # gem 'terser'         # used by jekyll-terser
     # gem 'unicode_utils' -- should be already installed by jekyll
     # gem 'webrick' -- should be already installed by jekyll
+end
+
+group :development do
+  gem "webrick"  # Required for Jekyll 4.0+
 end
