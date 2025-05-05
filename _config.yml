@@ -10,7 +10,7 @@ last_name: Papanikolaou
 # contact_note: >
 #  You can even add a little note about which of these is the best way to reach you.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Hi 😃, I am Nikos 👋, and this is my personal website 🌐.
+  Hi, I am Nikos and this is my personal website. I am currently a PhD student in Max Planck of Intelligence Systems in Tübingen. 
 footer_text:
 keywords:
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
