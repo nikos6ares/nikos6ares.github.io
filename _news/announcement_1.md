@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-New website using jekyll! :smile:
+New website using [jekyll by al-folio](https://github.com/alshedivat/al-folio)! :smile:

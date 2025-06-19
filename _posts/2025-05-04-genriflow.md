@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Music Classification
-date: 04-05-2025
+date: 2025-05-04
 description: Developing a model for classifying songs into genres.
-thumbnail: assets/img/genres.png
+thumbnail: assets/img/genres_2.jpg
 images:
   lightbox2: true
   photoswipe: true
