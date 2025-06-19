@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-music-classification",
+        },{id: "post-how-i-bought-a-car-in-germany-as-a-foreigner",
+      
+        title: "How I Bought a Car in Germany as a Foreigner",
+      
+      description: "Buying a car in Germany for the first time can feel like entering a maze. I recently went through the full process myself and I’m sharing everything I learned to save you time and stress.",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/car/";
+        
+      },
+    },{id: "post-music-classification",
       
         title: "Music Classification",
       
@@ -39,8 +50,8 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-new-website-using-jekyll-smile",
-          title: 'New website using jekyll! :smile:',
+            },},{id: "news-new-website-using-jekyll-by-al-folio-smile",
+          title: 'New website using jekyll by al-folio! :smile:',
           description: "",
           section: "News",},{
         id: 'social-email',
